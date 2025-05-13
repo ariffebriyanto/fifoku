@@ -17,7 +17,7 @@ class Product
         $stmt->execute([$id]);
         return $stmt->fetch(PDO::FETCH_OBJ);
     }
-public static function updateStock($id, $newStock)
+    public static function updateStock($id, $newStock)
     {
         $db = Database::getInstance();
         $stmt = $db->prepare("UPDATE products SET stock = ? WHERE id = ?");
@@ -43,12 +43,12 @@ public static function updateStock($id, $newStock)
         $stmt = $db->prepare("DELETE FROM products WHERE id = ?");
         return $stmt->execute([$id]);
     }
-	
-	public static function getFIFOStockData()
-{
-    $conn = Database::getInstance();
-    $stmt = $conn->prepare("SELECT name, stock, min_stock, max_stock FROM products ORDER BY name");
-    $stmt->execute();
-    return $stmt->fetchAll(PDO::FETCH_ASSOC);
-}
+
+    public static function getFIFOStockData()
+    {
+        $conn = Database::getInstance();
+        $stmt = $conn->prepare("SELECT name, stock, min_stock, max_stock FROM products ORDER BY name");
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }
