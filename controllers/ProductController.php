@@ -1,6 +1,7 @@
 <?php
 require_once __DIR__ . '/../config.php';
 require_once MODEL_PATH . 'Product.php';
+require_once MODEL_PATH . 'Inventory.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $name = $_POST['name'];
@@ -16,7 +17,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     if (isset($_POST['create'])) {
-        Product::create($_POST);
+        $productId = Product::create($_POST);
+        if ($productId > 0) {
+            Inventory::create([
+                'product_id' => $productId,
+                'quantity' => $stock,
+                'type' => 'in',
+                'sisa' => $stock,
+                'created_at' => date('Y-m-d H:i:s')
+            ]);
+        }
         header('Location: ../views/product/index.php?success=Produk ditambahkan');
     }
 

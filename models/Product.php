@@ -27,7 +27,8 @@ class Product
     {
         $db = Database::getInstance();
         $stmt = $db->prepare("INSERT INTO products (name, stock, min_stock, max_stock) VALUES (?, ?, ?, ?)");
-        return $stmt->execute([$data['name'], $data['stock'], $data['min_stock'], $data['max_stock']]);
+        $stmt->execute([$data['name'], $data['stock'], $data['min_stock'], $data['max_stock']]);
+        return $db->lastInsertId();
     }
 
     public static function update($id, $data)
