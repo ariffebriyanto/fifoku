@@ -48,14 +48,18 @@ include '../layout.php';
     </tbody>
 </table>
 <script>
-$(document).ready(function() {
-    $('#productTable').DataTable({
-        "pageLength": 10,         // default pagination
-        "order": [[0, "asc"]],    // urutkan kolom pertama (Nama) secara ascending
-        "columnDefs": [
-            { "orderable": false, "targets": 4 } // nonaktifkan sort di kolom Aksi
-        ]
+    $(document).ready(function() {
+        $('#productTable').DataTable({
+            "pageLength": 10, // default pagination
+            "order": [
+                [0, "asc"]
+            ], // urutkan kolom pertama (Nama) secara ascending
+            "columnDefs": [{
+                    "orderable": false,
+                    "targets": 4
+                } // nonaktifkan sort di kolom Aksi
+            ]
+        });
     });
-});
 </script>
 <?php include '../footer.php'; ?>
