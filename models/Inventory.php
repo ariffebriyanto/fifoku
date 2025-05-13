@@ -19,7 +19,7 @@ class Inventory
     public static function all()
     {
         $pdo = Database::getInstance();
-        $stmt = $pdo->query("SELECT inventory.*, products.name as product_name 
+        $stmt = $pdo->query("SELECT inventory.*, products.name as product_name, products.satuan as satuan 
                              FROM inventory 
                              JOIN products ON inventory.product_id = products.id 
                              ORDER BY inventory.created_at DESC");

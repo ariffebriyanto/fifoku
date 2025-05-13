@@ -29,6 +29,7 @@ include '../layout.php';
             <th>Stok</th>
             <th>Min</th>
             <th>Max</th>
+            <th>Satuan</th>
             <th>Aksi</th>
         </tr>
     </thead>
@@ -39,6 +40,7 @@ include '../layout.php';
                 <td><?= $p->stock ?></td>
                 <td><?= $p->min_stock ?></td>
                 <td><?= $p->max_stock ?></td>
+                <td><?= $p->satuan ?></td>
                 <td>
                     <a href="edit.php?id=<?= $p->id ?>" class="btn btn-warning btn-sm">Edit</a>
                     <a href="../../controllers/ProductController.php?delete=<?= $p->id ?>" onclick="return confirm('Hapus produk ini?')" class="btn btn-danger btn-sm">Hapus</a>

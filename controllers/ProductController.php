@@ -8,6 +8,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stock = (int) $_POST['stock'];
     $min = (int) $_POST['min_stock'];
     $max = (int) $_POST['max_stock'];
+    $satuan = $_POST['satuan'];
 
     // Validasi stok
     if ($stock < $min || $stock > $max || $min >= $max) {

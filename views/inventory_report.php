@@ -53,7 +53,7 @@ $transactions = Inventory::all();
                             <?php foreach ($transactions as $trx): ?>
                                 <tr>
                                     <td><?= htmlspecialchars($trx->product_name) ?></td>
-                                    <td><?= $trx->quantity ?></td>
+                                    <td><?= $trx->quantity . ' ' . $trx->satuan ?></td>
                                     <td>
                                         <?php if ($trx->type === 'in'): ?>
                                             <span class="badge bg-success">Stok Masuk</span>
