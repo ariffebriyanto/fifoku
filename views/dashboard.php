@@ -73,13 +73,15 @@ $products = Product::all();
                                             <td><?= $p->max_stock ?></td>
                                             <td>
                                                 <?php if ($p->stock < $p->min_stock): ?>
-                                                    <span class="badge bg-danger"><i class="fas fa-exclamation-triangle"></i> Stok Rendah</span>
+                                                    <span class="badge bg-danger text-white"><i class="fas fa-ban"></i> Dibawah Minimum</span>
+                                                <?php elseif ($p->stock <= $p->min_stock + 3): ?>
+                                                    <span class="badge bg-warning text-dark"><i class="fas fa-exclamation-circle"></i> Mendekati Minimum</span>
                                                 <?php elseif ($p->stock > $p->max_stock): ?>
-                                                    <span class="badge bg-warning text-dark"><i class="fas fa-exclamation-circle"></i> Melebihi Maksimum</span>
+                                                    <span class="badge bg-danger text-white"><i class="fas fa-ban"></i> Melebihi Maksimum</span>
                                                 <?php elseif ($p->stock >= ($p->max_stock - 3)): ?>
                                                     <span class="badge bg-warning text-dark"><i class="fas fa-exclamation-circle"></i> Hampir Penuh</span>
                                                 <?php else: ?>
-                                                    <span class="badge bg-success"><i class="fas fa-check-circle"></i> Aman</span>
+                                                    <span class="badge bg-success text-white"><i class="fas fa-check-circle"></i> Aman</span>
                                                 <?php endif; ?>
                                             </td>
                                         </tr>
@@ -171,8 +173,7 @@ $products = Product::all();
             [0, "asc"]
         ], // urutkan kolom pertama (Nama) secara ascending
         "columnDefs": [{
-                "orderable": false,
-                "targets": 4
+
             } // nonaktifkan sort di kolom Aksi
         ]
     });
