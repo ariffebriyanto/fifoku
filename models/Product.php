@@ -45,10 +45,18 @@ class Product
         return $stmt->execute([$id]);
     }
 
-    public static function getFIFOStockData()
+    public static function getFIFOStockData($productId)
     {
         $conn = Database::getInstance();
-        $stmt = $conn->prepare("SELECT name, stock, min_stock, max_stock, satuan FROM products ORDER BY name");
+
+        if ($productId > 0) {
+            $where = " WHERE id = $productId ";
+        } else {
+            $where = "";
+        }
+        $query = "SELECT name, stock, min_stock, max_stock, satuan FROM products $where ORDER BY name";
+
+        $stmt = $conn->prepare($query);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
