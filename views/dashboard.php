@@ -46,7 +46,14 @@ $products = Product::all();
                     <div class="alert alert-success"><?= htmlspecialchars($_GET['success']) ?></div>
                 <?php endif; ?>
 
-                <?php $fifoStocks = Product::getFIFOStockData($_COOKIE['SEARCH_PRODUCT_CHART']); ?>
+                <?php
+                if (!isset($_COOKIE['SEARCH_PRODUCT_CHART'])) {
+                    $cookie_chart_filter = 0;
+                } else {
+                    $cookie_chart_filter = $_COOKIE['SEARCH_PRODUCT_CHART'];
+                }
+                $fifoStocks = Product::getFIFOStockData($cookie_chart_filter);
+                ?>
 
                 <div class="card shadow mb-4">
                     <div class="card-header py-3 bg-primary text-white">
