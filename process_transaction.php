@@ -5,6 +5,7 @@ require_once 'models/Inventory.php';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $productId = $_POST['product_id'];
     $quantity = (int) $_POST['quantity'];
+    $note = $_POST['note'];
     $type = $_POST['type'];
 
     if (!$productId || !$quantity || !$type) {
@@ -61,6 +62,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         'quantity' => $quantity,
         'type' => $type,
         'sisa' => $sisa,
+        'note' => $note,
         'created_at' => date('Y-m-d H:i:s')
     ]);
 

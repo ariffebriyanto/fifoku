@@ -6,12 +6,13 @@ class Inventory
     public static function create($data)
     {
         $pdo = Database::getInstance();
-        $stmt = $pdo->prepare("INSERT INTO inventory (product_id, quantity, type, sisa, created_at) VALUES (?, ?, ?, ?, ?)");
+        $stmt = $pdo->prepare("INSERT INTO inventory (product_id, quantity, type, sisa, note, created_at) VALUES (?, ?, ?, ?, ?, ?)");
         $stmt->execute([
             $data['product_id'],
             $data['quantity'],
             $data['type'],
             $data['sisa'],
+            $data['note'],
             $data['created_at']
         ]);
     }
