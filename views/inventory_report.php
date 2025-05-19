@@ -20,6 +20,10 @@ $transactions = Inventory::all();
     <meta charset="UTF-8">
     <title>Laporan Transaksi</title>
     <link href="../assets/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 </head>
 <div id="wrapper">
     <?php include($_SERVER['DOCUMENT_ROOT'] . '/inventory-system/templates/sidebar.php'); ?>
@@ -32,42 +36,43 @@ $transactions = Inventory::all();
             <div class="container-fluid">
                 <!-- Include the dashboard view -->
 
-                 <body class="bg-light">
+                <body class="bg-light">
                     <div class="container mt-4">
-                    <h2>📋 Laporan Transaksi Inventori (FIFO)</h2>
-                    <a href="dashboard.php" class="btn btn-secondary mb-3">← Kembali ke Dashboard</a>
-                    <a href="../export_excel.php" class="btn btn-success mb-3">⬇️ Export Excel</a>
-                    <a href="../export_pdf.php" class="btn btn-danger mb-3">🖨️ Cetak PDF</a>
-
-
-
-                    <table class="table table-bordered">
-                        <thead>
-                            <tr>
-                                <th>Produk</th>
-                                <th>Jumlah</th>
-                                <th>Jenis</th>
-                                <th>Waktu</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php foreach ($transactions as $trx): ?>
+                        <h2>📋 Laporan Transaksi Inventori (FIFO)</h2>
+                        <a href="dashboard.php" class="btn btn-secondary mb-3">← Kembali ke Dashboard</a>
+                        <a href="../export_excel.php" class="btn btn-success mb-3">⬇️ Export Excel</a>
+                        <a href="../export_pdf.php" class="btn btn-danger mb-3">🖨️ Cetak PDF</a>
+                        <table id="laporanTransaksiProductTable" class="table table-bordered">
+                            <thead>
                                 <tr>
-                                    <td><?= htmlspecialchars($trx->product_name) ?></td>
-                                    <td><?= $trx->quantity . ' ' . $trx->satuan ?></td>
-                                    <td>
-                                        <?php if ($trx->type === 'in'): ?>
-                                            <span class="badge bg-success">Stok Masuk</span>
-                                        <?php else: ?>
-                                            <span class="badge bg-danger">Stok Keluar</span>
-                                        <?php endif; ?>
-                                    </td>
-                                    <td><?= date('d M Y H:i:s', strtotime($trx->created_at)) ?></td>
+                                    <th>Produk</th>
+                                    <th>Jumlah</th>
+                                    <th>Sisa</th>
+                                    <th>Satuan</th>
+                                    <th>Jenis</th>
+                                    <th>Waktu</th>
                                 </tr>
-                            <?php endforeach; ?>
-                        </tbody>
-                    </table>
-					</div>
+                            </thead>
+                            <tbody>
+                                <?php foreach ($transactions as $trx): ?>
+                                    <tr>
+                                        <td><?= htmlspecialchars($trx->product_name) ?></td>
+                                        <td><?= $trx->quantity ?></td>
+                                        <td><?= $trx->sisa ?></td>
+                                        <td><?= $trx->satuan ?></td>
+                                        <td>
+                                            <?php if ($trx->type === 'in'): ?>
+                                                <span class="badge bg-success">Stok Masuk</span>
+                                            <?php else: ?>
+                                                <span class="badge bg-danger">Stok Keluar</span>
+                                            <?php endif; ?>
+                                        </td>
+                                        <td><?= date('d M Y H:i:s', strtotime($trx->created_at)) ?></td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    </div>
                 </body>
 
 
@@ -75,7 +80,18 @@ $transactions = Inventory::all();
         </div>
     </div>
 </div>
+<script>
+    $('#laporanTransaksiProductTable').DataTable({
+        "pageLength": 10, // default pagination
+        "order": [
+            [0, "asc"]
+        ], // urutkan kolom pertama (Nama) secara ascending
+        "columnDefs": [{
 
+            } // nonaktifkan sort di kolom Aksi
+        ]
+    });
+</script>
 
 </html>
 <?php include($_SERVER['DOCUMENT_ROOT'] . '/inventory-system/templates/footer.php'); ?>
