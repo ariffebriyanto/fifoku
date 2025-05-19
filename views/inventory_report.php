@@ -32,7 +32,8 @@ $transactions = Inventory::all();
             <div class="container-fluid">
                 <!-- Include the dashboard view -->
 
-                <body class="container mt-5">
+                 <body class="bg-light">
+                    <div class="container mt-4">
                     <h2>📋 Laporan Transaksi Inventori (FIFO)</h2>
                     <a href="dashboard.php" class="btn btn-secondary mb-3">← Kembali ke Dashboard</a>
                     <a href="../export_excel.php" class="btn btn-success mb-3">⬇️ Export Excel</a>
@@ -66,6 +67,7 @@ $transactions = Inventory::all();
                             <?php endforeach; ?>
                         </tbody>
                     </table>
+					</div>
                 </body>
 
 
