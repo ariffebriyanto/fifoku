@@ -17,13 +17,20 @@ class Inventory
         ]);
     }
 
-    public static function all()
+    public static function all($productId = 0)
     {
         $pdo = Database::getInstance();
-        $stmt = $pdo->query("SELECT inventory.*, products.name as product_name, products.satuan as satuan 
+        if ($productId > 0) {
+            $WHERE = " WHERE  products.id = $productId";
+        } else {
+            $WHERE = " ";
+        }
+        $q = "SELECT inventory.*, products.name as product_name, products.satuan as satuan 
                              FROM inventory 
                              JOIN products ON inventory.product_id = products.id 
-                             ORDER BY inventory.created_at DESC");
+                             $WHERE
+                             ORDER BY inventory.created_at DESC";
+        $stmt = $pdo->query($q);
         return $stmt->fetchAll(PDO::FETCH_OBJ);
     }
 

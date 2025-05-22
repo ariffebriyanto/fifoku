@@ -27,14 +27,14 @@ $base_url = $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['HTTP_HOST'] . '/inven
             <span>Dashboard</span>
         </a>
     </li>
-	
-	
+
+
 
     <!-- Divider -->
     <hr class="sidebar-divider">
 
- <!-- Menu User Control - Only for Admin -->
-   <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin'): ?>
+    <!-- Menu User Control - Only for Admin -->
+    <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin'): ?>
         <li class="nav-item">
             <a class="nav-link" href="<?= $base_url ?>/views/user/index.php">
                 <i class="fas fa-users-cog"></i>
@@ -64,6 +64,13 @@ $base_url = $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['HTTP_HOST'] . '/inven
         <a class="nav-link" href="<?= $base_url ?>/views/inventory_report.php">
             <i class="fas fa-file-alt"></i>
             <span>Laporan Stok</span>
+        </a>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link" href="<?= $base_url ?>/views/product_report.php">
+            <i class="fas fa-file-alt"></i>
+            <span>Laporan Produk</span>
         </a>
     </li>
 
