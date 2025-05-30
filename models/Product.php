@@ -44,14 +44,14 @@ class Product
         $stmt = $db->prepare("DELETE FROM products WHERE id = ?");
         return $stmt->execute([$id]);
     }
-	
-	public static function getStockAlerts()
-{
-    $db = Database::getInstance();
-    $stmt = $db->prepare("SELECT * FROM products WHERE stock <= min_stock + 5 OR stock >= max_stock - 5");
-    $stmt->execute();
-    return $stmt->fetchAll(PDO::FETCH_OBJ);
-}
+
+    public static function getStockAlerts()
+    {
+        $db = Database::getInstance();
+        $stmt = $db->prepare("SELECT * FROM products WHERE stock <= min_stock + 5");
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_OBJ);
+    }
 
 
     public static function getFIFOStockData($productId)
