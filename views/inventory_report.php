@@ -27,85 +27,89 @@ $transactions = Inventory::all([
 </head>
 
 <body class="bg-light">
-<div id="wrapper">
-    <?php include($_SERVER['DOCUMENT_ROOT'] . '/inventory-system/templates/sidebar.php'); ?>
+    <div id="wrapper">
+        <?php include($_SERVER['DOCUMENT_ROOT'] . '/inventory-system/templates/sidebar.php'); ?>
 
-    <div id="content-wrapper" class="d-flex flex-column">
-        <div id="content">
-            <?php include($_SERVER['DOCUMENT_ROOT'] . '/inventory-system/templates/topbar.php'); ?>
+        <div id="content-wrapper" class="d-flex flex-column">
+            <div id="content">
+                <?php include($_SERVER['DOCUMENT_ROOT'] . '/inventory-system/templates/topbar.php'); ?>
 
-            <div class="container-fluid mt-4">
-                <h2>📋 Laporan Transaksi Inventori (FIFO)</h2>
+                <div class="container-fluid mt-4">
+                    <h2>📋 Laporan Transaksi Inventori (FIFO)</h2>
 
-                <a href="dashboard.php" class="btn btn-secondary mb-3">← Kembali ke Dashboard</a>
-                <a href="../export_excel.php" class="btn btn-success mb-3">⬇️ Export Excel</a>
-                <a href="../export_pdf.php" class="btn btn-danger mb-3">🖨️ Cetak PDF</a>
+                    <a href="dashboard.php" class="btn btn-secondary mb-3">← Kembali ke Dashboard</a>
+                    <a href="../export_excel.php" class="btn btn-success mb-3">⬇️ Export Excel</a>
+                    <a href="../export_pdf.php" class="btn btn-danger mb-3">🖨️ Cetak PDF</a>
 
-                <!-- Filter -->
-                <form method="get" class="row mb-4">
-                    <div class="col-md-3">
-                        <label for="type">Jenis Transaksi</label>
-                        <select name="type" class="form-control">
-                            <option value="">-- Semua --</option>
-                            <option value="in" <?= isset($_GET['type']) && $_GET['type'] == 'in' ? 'selected' : '' ?>>Stok Masuk</option>
-                            <option value="out" <?= isset($_GET['type']) && $_GET['type'] == 'out' ? 'selected' : '' ?>>Stok Keluar</option>
-                        </select>
-                    </div>
-                    <div class="col-md-3">
-                        <label for="from">Dari Tanggal</label>
-                        <input type="date" name="from" class="form-control" value="<?= $_GET['from'] ?? '' ?>">
-                    </div>
-                    <div class="col-md-3">
-                        <label for="to">Sampai Tanggal</label>
-                        <input type="date" name="to" class="form-control" value="<?= $_GET['to'] ?? '' ?>">
-                    </div>
-                    <div class="col-md-3 d-flex align-items-end">
-                        <button type="submit" class="btn btn-primary me-2">🔍 Filter</button>
-                        <a href="laporan.php" class="btn btn-secondary">🔄 Reset</a>
-                    </div>
-                </form>
+                    <!-- Filter -->
+                    <form method="get" class="row mb-4">
+                        <div class="col-md-3">
+                            <label for="type">Jenis Transaksi</label>
+                            <select name="type" class="form-control">
+                                <option value="">-- Semua --</option>
+                                <option value="in" <?= isset($_GET['type']) && $_GET['type'] == 'in' ? 'selected' : '' ?>>Stok Masuk</option>
+                                <option value="out" <?= isset($_GET['type']) && $_GET['type'] == 'out' ? 'selected' : '' ?>>Stok Keluar</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <label for="from">Dari Tanggal</label>
+                            <input type="date" name="from" class="form-control" value="<?= $_GET['from'] ?? '' ?>">
+                        </div>
+                        <div class="col-md-3">
+                            <label for="to">Sampai Tanggal</label>
+                            <input type="date" name="to" class="form-control" value="<?= $_GET['to'] ?? '' ?>">
+                        </div>
+                        <div class="col-md-3 d-flex align-items-end">
+                            <button type="submit" class="btn btn-primary me-2">🔍 Filter</button>
+                            <a href="<?= $base_url ?>/views/inventory_report.php" class="btn btn-secondary">🔄 Reset</a>
+                        </div>
+                    </form>
 
-                <table id="laporanTransaksiProductTable" class="table table-bordered">
-                    <thead>
-                        <tr>
-                            <th>Produk</th>
-                            <th>Jumlah</th>
-                            <th>Sisa</th>
-                            <th>Satuan</th>
-                            <th>Jenis</th>
-                            <th>Waktu</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php foreach ($transactions as $trx): ?>
+                    <table id="laporanTransaksiProductTable" class="table table-bordered">
+                        <thead>
                             <tr>
-                                <td><?= htmlspecialchars($trx->product_name) ?></td>
-                                <td><?= $trx->quantity ?></td>
-                                <td><?= $trx->sisa ?></td>
-                                <td><?= $trx->satuan ?></td>
-                                <td>
-                                    <?php if ($trx->type === 'in'): ?>
-                                        <span class="badge bg-success">Stok Masuk</span>
-                                    <?php else: ?>
-                                        <span class="badge bg-danger">Stok Keluar</span>
-                                    <?php endif; ?>
-                                </td>
-                                <td><?= date('d M Y H:i:s', strtotime($trx->created_at)) ?></td>
+                                <th>Produk</th>
+                                <th>Jumlah</th>
+                                <th>Sisa</th>
+                                <th>Satuan</th>
+                                <th>Jenis</th>
+                                <th>Waktu</th>
                             </tr>
-                        <?php endforeach; ?>
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            <?php foreach ($transactions as $trx): ?>
+                                <tr>
+                                    <td><?= htmlspecialchars($trx->product_name) ?></td>
+                                    <td><?= $trx->quantity ?></td>
+                                    <td><?= $trx->sisa ?></td>
+                                    <td><?= $trx->satuan ?></td>
+                                    <td>
+                                        <?php if ($trx->type === 'in'): ?>
+                                            <span class="badge bg-success">Stok Masuk</span>
+                                        <?php else: ?>
+                                            <span class="badge bg-danger">Stok Keluar</span>
+                                        <?php endif; ?>
+                                    </td>
+                                    <td><?= date('d M Y H:i:s', strtotime($trx->created_at)) ?></td>
+                                </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-<script>
-    $('#laporanTransaksiProductTable').DataTable({
-        "pageLength": 10,
-        "order": [[5, "desc"]]
-    });
-</script>
+    <script>
+        $('#laporanTransaksiProductTable').DataTable({
+            "pageLength": 10,
+            "order": [
+                [5, "desc"]
+            ],
+            "bFilter": false
+        });
+    </script>
 </body>
+
 </html>
 <?php include($_SERVER['DOCUMENT_ROOT'] . '/inventory-system/templates/footer.php'); ?>
