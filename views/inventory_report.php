@@ -74,6 +74,7 @@ $transactions = Inventory::all([
                                 <th>Satuan</th>
                                 <th>Jenis</th>
                                 <th>Waktu</th>
+								<th>Detil</th> 
                             </tr>
                         </thead>
                         <tbody>
@@ -91,6 +92,12 @@ $transactions = Inventory::all([
                                         <?php endif; ?>
                                     </td>
                                     <td><?= date('d M Y H:i:s', strtotime($trx->created_at)) ?></td>
+									<td>
+        <a href="<?= $base_url ?>/views/inventory_fifo_detail.php?pid=<?= $trx->product_id ?>&trx_date=<?= urlencode($trx->created_at) ?>" 
+           class="btn btn-sm btn-info" title="Lihat FIFO">
+            <i class="fas fa-eye"></i>
+        </a>
+    </td>
                                 </tr>
                             <?php endforeach; ?>
                         </tbody>

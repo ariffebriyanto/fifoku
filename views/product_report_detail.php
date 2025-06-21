@@ -11,7 +11,7 @@ if (!isset($_SESSION['user'])) {
 require_once __DIR__ . '/../config.php';
 require_once MODEL_PATH . 'Inventory.php';
 $pid = $_GET['pid'];
-$transactions = Inventory::all($pid);
+$transactions = Inventory::all(['product_id' => $pid]);
 ?>
 <?php include($_SERVER['DOCUMENT_ROOT'] . '/inventory-system/templates/header.php'); ?>
 <!DOCTYPE html>

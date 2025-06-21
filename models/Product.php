@@ -46,12 +46,24 @@ class Product
     }
 
     public static function getStockAlerts()
-    {
-        $db = Database::getInstance();
-        $stmt = $db->prepare("SELECT * FROM products WHERE stock <= min_stock + 5");
-        $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_OBJ);
-    }
+{
+    $db = Database::getInstance();
+    $stmt = $db->prepare("
+        SELECT p.*, i.created_at created_time
+        FROM products p
+        JOIN (
+            SELECT product_id, MAX(created_at) AS created_at
+            FROM inventory
+            GROUP BY product_id
+        ) i ON i.product_id = p.id
+        WHERE p.stock <= p.min_stock + 5
+        ORDER BY i.created_at DESC
+        LIMIT 10
+    ");
+    $stmt->execute();
+    return $stmt->fetchAll(PDO::FETCH_OBJ);
+}
+
 
 
     public static function getFIFOStockData($productId)

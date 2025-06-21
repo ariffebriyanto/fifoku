@@ -32,16 +32,23 @@ $notifCount = count($stockNotifications);
                 <h6 class="dropdown-header">Notifikasi Stok</h6>
                 <?php if ($notifCount > 0): ?>
                     <?php foreach ($stockNotifications as $product): ?>
-                        <a class="dropdown-item d-flex align-items-center" href="#">
-                            <div>
-                                <div class="small font-weight-bold text-black-500"><?= htmlspecialchars($product->name) ?></div>
-                                <span class="font-weight-bold text-danger">
-                                    Stok saat ini <?= $product->stock ?> <?= $product->satuan ?> |
-                                    Min: <?= $product->min_stock ?>, agar segera dilakukan pembelian.
-                                </span>
-                            </div>
-                        </a>
-                    <?php endforeach; ?>
+    <a class="dropdown-item d-flex align-items-center" href="#">
+        <div>
+            <div class="small font-weight-bold text-black-500">
+                <?= htmlspecialchars($product->name) ?>
+            </div>
+            <div class="text-danger small">
+                Stok: <?= $product->stock ?> <?= $product->satuan ?> |
+                Min: <?= $product->min_stock ?>
+            </div>
+            <div class="text-muted small">
+                <i class="fas fa-clock"></i>
+                <?= date('d M Y H:i', strtotime($product->created_time)) ?>
+            </div>
+        </div>
+    </a>
+<?php endforeach; ?>
+
                 <?php else: ?>
                     <a class="dropdown-item text-center small text-gray-500">Tidak ada notifikasi</a>
                 <?php endif; ?>
